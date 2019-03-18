@@ -8,7 +8,8 @@ export default class IphoneMain extends Component {
         usertext: '',
         shiftLeftIndex : 0,
         shiftRightIndex: 0,
-        globalIndex:     0
+        globalIndex:     0,
+        suggestion: []
     }
   }
 
@@ -75,10 +76,14 @@ export default class IphoneMain extends Component {
   
   }
 
+
   render() {
     return (
       <React-Fragment>
-         <IphoneView userInput={this.setInput} usertext={this.state && this.state.usertext} shifter={this.setShifter}/>
+         <IphoneView userInput={this.setInput} usertext={this.state && this.state.usertext} 
+                      shifter={this.setShifter}
+                     
+                      list={this.state.suggestion}/>
       </React-Fragment>
     )
   }
