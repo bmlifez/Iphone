@@ -1,7 +1,7 @@
 import React from 'react';
 import '../assets/css/iphone.scss';
 
-export const IphoneView = ({usertext,userInput,shifter,suggestion,list}) =>{
+export const IphoneView = ({usertext,userInput,shifter,suggestion,list,updaterEvent}) =>{
 
     const updateText =(e)=>{
         userInput(e)
@@ -13,30 +13,61 @@ export const IphoneView = ({usertext,userInput,shifter,suggestion,list}) =>{
 
    
 
-    const exe = (val,e) =>{
-            if (e.detail === 7) {
-                userInput(val[6])
-            }
-            if (e.detail === 6) {
-                userInput(val[5])
-              
-            }
-            if (e.detail === 5) {
-                userInput(val[4]);
-            }
-            if (e.detail === 4) {
-                userInput(val[3])
-            }
-            if (e.detail === 3) {
-                userInput(val[2])
-            }
-            if (e.detail === 2) {
-                userInput(val[1])
-            }
-            if (e.detail === 1) {
-                userInput(val[0])
-            }
-    }
+    function debounce(fn, wait,e) {
+      
+        var timeout;
+        e && e.persist();
+        return function() {
+          
+            var context = this;
+            var args = arguments;
+            
+            clearTimeout(timeout);
+            
+            timeout = setTimeout(function(event) {
+               
+                fn.apply(context, args);
+            }, wait);
+        };
+    };
+
+    let myEfficientFn = debounce(function(val,e) {
+        e.persist()
+        // All the taxing stuff you do
+        if (e.detail === 7) {
+            userInput(val[6]);
+          
+       }
+       if (e.detail === 6) {
+            userInput(val[5])
+          
+       }
+       if (e.detail === 5) {
+             userInput(val[4]);
+          
+       }
+       if (e.detail === 4) {
+             userInput(val[3])
+           
+       }
+       if (e.detail === 3) {
+             userInput(val[2])
+          
+       }
+       if (e.detail === 2) {
+            userInput(val[1])
+          
+       }
+       if (e.detail === 1) {
+            userInput(val[0])
+         
+       }
+    }, 250);
+
+   
+
+    
+    
     
 
    
@@ -56,28 +87,28 @@ export const IphoneView = ({usertext,userInput,shifter,suggestion,list}) =>{
                 <div className="dig pound number-dig" name="1" ></div>
                 <div className="dig pound number-dig" name="1" onClick={e=> updateShift(39)}>Right</div>
                 <div className="dig pound number-dig" name="1" onClick={e=> updateText(1)}>1</div>
-                <div className="dig number-dig" name="2"  onClick={e=> exe(['2','a','b','c','aa','ab','ac'],e)}>2
+                <div className="dig number-dig" name="2"  onClickCapture={e=> myEfficientFn(['2','a','b','c','aa','ab','ac'],e)}>2
                     <div className="sub-dig">ABC</div>
                 </div>
-                <div className="dig number-dig" name="3" onClick={e=> exe(['3','d','e','f','dd','de','df'],e)}>3
+                <div className="dig number-dig" name="3" onClickCapture={e=> myEfficientFn(['3','d','e','f','dd','de','df'],e)}>3
                     <div className="sub-dig">DEF</div>
                 </div>
-                <div className="dig number-dig" name="4" onClick={e=> exe(['4','g','h','i','gh','hi','ig'],e)}>4
+                <div className="dig number-dig" name="4" onClickCapture={e=> myEfficientFn(['4','g','h','i','gh','hi','ig'],e)}>4
                     <div className="sub-dig">GHI</div>
                 </div>
-                <div className="dig number-dig" name="5"   onClick={e=> exe(['5','j','k','l','jk','kl','lj'],e)}>5
+                <div className="dig number-dig" name="5"   onClickCapture={e=> myEfficientFn(['5','j','k','l','jk','kl','lj'],e)}>5
                     <div className="sub-dig">JKL</div>
                 </div>
-                <div className="dig number-dig" name="6"   onClick={e=> exe(['6','m','n','o','mn','no','om'],e) }>6
+                <div className="dig number-dig" name="6"   onClickCapture={e=> myEfficientFn(['6','m','n','o','mn','no','om'],e) }>6
                     <div className="sub-dig">MNO</div>
                 </div>
-                <div className="dig number-dig" name="7"   onClick={e=> exe(['7','p','q','r','s','pq','rs'],e) }>7
+                <div className="dig number-dig" name="7"   onClickCapture={e=> myEfficientFn(['7','p','q','r','s','pq','rs'],e) }>7
                     <div className="sub-dig">PQRS</div>
                 </div>
-                <div className="dig number-dig" name="8"   onClick={e=> exe(['8','t','u','v','tu','uv','vt'],e) }>8
+                <div className="dig number-dig" name="8"   onClickCapture={e=> myEfficientFn(['8','t','u','v','tu','uv','vt'],e) }>8
                     <div className="sub-dig">TUV</div>
                 </div>
-                <div className="dig number-dig" name="9"   onClick={e=> exe(['9','w','x','y','z','wx','xy'],e) }>9
+                <div className="dig number-dig" name="9"   onClickCapture={e=> myEfficientFn(['9','w','x','y','z','wx','xy'],e) }>9
                     <div className="sub-dig">WXYZ</div>
                 </div>
                 <div className="dig number-dig astrisk" name="*"  onClick={e=> updateText('*')}>*</div>
